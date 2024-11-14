@@ -48,4 +48,28 @@ def main():
         # Extract text based on file type
         if uploaded_file.type == "application/pdf":
             text = read_pdf(uploaded_file)
-        elif uploaded_file.type == "
+        elif uploaded_file.type == "text/plain":
+            text = uploaded_file.read().decode("utf-8")
+        else:
+            st.error("Unsupported file type.")
+            return
+
+        st.subheader("Extracted Text")
+        st.text_area("File Notes", text, height=300)
+
+        # Generate embeddings
+        embeddings = embed_text(text)
+        
+        st.subheader("Generated Embeddings")
+        st.write(embeddings)
+
+        # Simulate vector database entry (print embeddings and metadata)
+        st.subheader("Metadata Preview")
+        st.json({
+            "text_snippet": text[:100],
+            "embedding": embeddings[:5],  # Show only first 5 elements for brevity
+            "length": len(embeddings)
+        })
+
+if __name__ == "__main__":
+    main()
