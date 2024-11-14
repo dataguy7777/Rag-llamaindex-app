@@ -1,1 +1,6 @@
 streamlit
+llama-index
+PyPDF2
+openai
+numpy
+pandas
